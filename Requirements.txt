@@ -1,0 +1,13 @@
+This is the first project for CSCI 363 SP 2020
+This project was done by Eva Achim
+
+In this project:
+
+1. Finds all possible combinations of numbers that add up to target
+2. Uses 4 classes to accomplish this
+3. Uses static methods
+4. Uses object oriented programming.
+5. Interacts with the user
+6. Program works for any size array
+7. The test cases I used are listed in Test Cases.txt
+8. Java docs were used
