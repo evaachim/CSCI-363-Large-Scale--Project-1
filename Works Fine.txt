@@ -1,0 +1,220 @@
+/**
+* The Combo Program Finds all of the possible *combinations in the array that add up to a target
+* 
+* @author:  Eva Achim
+* @Occupation: Howard University Student
+* @Student ID: @02903226
+* @Usage: CSCI 363
+* @When: January 18th 2020
+* @Customer: Bernard Wolfolk
+* @Expectations: User interacts with interface
+*/
+//libraries to be used in this program
+import java.io.*; 
+import java.lang.*; 
+import java.util.Scanner;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Arrays;
+import java.util.InputMismatchException;
+//user class
+class User {
+  public static String target;
+  public static int my_target;
+  /**
+   * This method is used to greet the user.
+   * @return nothing.
+   */
+  public static void sayHello()
+  {
+    System.out.println("\n*** Hello! Welcome! *** \n *** Today we Play Combo-Target-Sum! *** \n *** Have Fun *** \n");
+  }
+
+  /**
+   * This method is used to check if user input is numeric or not
+   * @param userInput This is the first paramter to numOrNo method. It takes the user's input and checks if it is numeric or not.
+   * @param check is the second parameter of the numOrNo method. It is used in a try catch statement.
+   * @return boolean. True or false. 
+   */
+public static boolean numOrNo(String userInput) {
+    if (userInput == null) {
+        return false;
+    }
+    //try catch for wrong inputs
+    try {
+        int check = Integer.parseInt(userInput);
+    } catch (NumberFormatException nfe) {
+        return false;
+    }
+    //everything is allright 
+    return true;
+}
+
+  /**
+   * This method is used to ask and get the target from user input
+   * @param target This is the first paramter to GetTarget method. It takes the user's input
+   * @param my_target is the second parameter of the GetTarget. It casts the user input to an integer
+   * @return int This returns my_target.
+   */
+  public static int getTarget(){
+  Scanner myGetTarget = new Scanner(System.in); 
+  System.out.println("Enter a target sum");
+  target = myGetTarget.nextLine(); 
+  //in case the input is not numeric
+  while (!numOrNo(target)){
+    //keep asking the user to try again
+    System.out.println("Sorry. That was not a number! Enter a target sum");
+  target = myGetTarget.nextLine(); 
+  }
+  //cast to integer
+  my_target = Integer.parseInt(target);	
+  return my_target;
+      }
+}
+
+
+class Combo {
+  public static List<List<Integer>> getSum(int[] my_arr, int my_target) {
+     /**
+   * This method is used to create arraylists and recursively call the CreateCombo method.
+   * @param 1: add_elem. This is the first paramter to GetSum method. It is an ArrayList of integers
+   * @param 2: ret. This is the second paramter to GetSum method. It is the second ArrayList of integers, to be returned.
+   * @return int This returns the array with all of the indices whose elements add up to target.
+   */
+            List<Integer> add_elem = new ArrayList<Integer>();
+            List<List<Integer>> ret = new ArrayList<List<Integer>>();
+            //message for user
+            System.out.println("Your Combinations are: ");
+            createCombo(ret, add_elem, my_arr, my_target, 0);
+            //check if it is empty and let user know if so. 
+            if (ret.isEmpty()){
+              System.out.println("Sorry. Your array does NOT have elements that can add up to your desired target! It's the empty set...");
+            }
+     //return the result
+            return ret;
+        }
+         
+        private static void createCombo(List<List<Integer>> ret, List<Integer> add_elem, int[] my_arr, int my_target,int pos) {
+            /**
+   * This method is used to populate the ret array with all of the indices that add up to my_target.
+   * @param 1: n. This is the first parameter of the CreateCombo method. It is the length of the original array. 
+   * @param 2: sum. This is the second paramter of the method. It is the sum of the elements in the original array.
+   @param 3: i. This is the third parameter of the method. It is an iterator.
+   @param 4: my_target. This is the fourth parameter of the method. It is the target sum that the method is looking for.
+   @param 5: ret: the array to be returned from the GetSum method, where CreateCombo is called. It is an array of arrays.
+   @param 6: add_elem. This is the 6th parameter of the method. It adds the indices tht add up to target into individual arrays. 
+   * @return nothing. This is a void method. 
+   */
+                int n = my_arr.length;
+                int sum = 0;
+                for (int i: add_elem) {
+                  if (sum<=my_target)
+                  {
+                    //keep adding elements up until target is reached
+                        sum += my_arr[i];
+                  }
+                }
+                    for (int i = pos; i < n; i++)
+                    {
+                       if (sum == my_target) {
+                         //when target is reached, add the entire array to the array of arrays
+                        ret.add(new ArrayList<Integer>(add_elem));
+                        return;
+                }
+                 if (sum < my_target)
+                {
+                  //or else add elements to each array
+                        add_elem.add(i);
+                        //call method here
+                        createCombo(ret, add_elem, my_arr, my_target, i+1);
+                       add_elem.remove(add_elem.size() - 1);
+                    }
+                }
+            }
+}
+
+class ArrIn {
+
+         /**
+   * This method is used to allow the user to manuakky enter the array elements
+   * @param 1: theCount. This is the first parameter of the getMyArr method. It is the length of the array, as provided by the user. 
+   * @param 2: len. This is the second paramter of the method. It is the integer value of param 1.
+   @param 3: my_arr. This is the third parameter of the method. It is the array that the user populates
+   @param 4: i. This is the fourth parameter of the method. It is an loop variable.
+   @param 5: j: parameter of the method. It is an loop variable.
+   * @return the array as entered by user. 
+   */
+  public static int[] getMyArr()
+  {
+  System.out.println("Enter the number of elements in array");
+  Scanner myGet = new Scanner(System.in); 
+  //get the number of elements
+  String theCount = myGet.nextLine();
+  //if the input is not numeric
+  while (!User.numOrNo(theCount)){
+    System.out.println("Sorry. That was not a number! Enter a count number");
+    theCount = myGet.nextLine(); 
+  }
+  
+  //cast to int
+  int len = Integer.parseInt(theCount);
+  while (len==0 || len <= -1){
+    System.out.println("Sorry. You cannot have an array with less than 1 element. Enter a different number!");
+    theCount = myGet.nextLine(); 
+  }
+          int [] my_arr = new int[len+1];
+        System.out.println("Enter elements in array. Must be " + theCount + " elements");
+       //populate the array
+        for (int i = 0; i < len; i++) {
+                try{
+                my_arr[i] = myGet.nextInt();
+                }
+                catch (InputMismatchException exception) 
+              { 
+    System.out.println("Integers only, please."); 
+    myGet.next();
+    my_arr[i]=myGet.nextInt();
+          }
+            }
+          int []an_arr = new int[len];
+          for (int j = 0; j < len; j++) {
+           
+                an_arr[j] = my_arr[j];
+            }
+            //show array
+        System.out.println("Your array is: " + Arrays.toString(an_arr));
+        //return it
+        return my_arr; 
+            }
+        }
+        
+  
+
+class Main {
+  //driver class
+  //wanted to rename Driver but Repl.it does not allow me to rename the file to Driver.java from Main.java
+  public static void main(String args[]) {
+  //greet user
+   User.sayHello();
+   //input for stay or go
+   String input = "";
+  // get input 
+   Scanner sc = new Scanner(System.in);
+        while (!input.toUpperCase().equals("Q"))
+{
+       //implement all program here
+        System.out.println(Combo.getSum(ArrIn.getMyArr(), User.getTarget()));
+        //ask user to press something
+        System.out.println("Press Q or q to quit. Any key to continue ...");
+        //get input
+        input = sc.next();
+        if(!input.toUpperCase().equals("Q"))
+        {
+          System.out.println("***** New Round ! *******");
+        }
+}
+System.out.println("***** BYE !!! *******");
+//stop everything
+System.exit(0);
+  }
+}
