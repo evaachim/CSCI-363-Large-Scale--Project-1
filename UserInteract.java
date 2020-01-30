@@ -1,5 +1,19 @@
+/**
+* The Combo TargSum Program Finds all of the possible *combinations in the array that add up to a target
+* 
+* @author:  Eva Achim
+* @Occupation: Howard University Student
+* @Student ID: @02903226
+* @Usage: CSCI 363
+* @When: January 18th 2020
+* @Customer: Bernard Wolfolk
+* @Expectations: User interacts with interface
+* @Test Cases in Test Cases.txt
+*/
+//package it 
 package UserInter;
 
+//get all necessary libtaries
 import java.io.*; 
 import java.lang.*; 
 import java.util.Scanner;
@@ -9,6 +23,7 @@ import java.util.Arrays;
 import java.util.InputMismatchException;
 //user class
 class User {
+  //public variables
   public static String target;
   public static int my_target;
   /**
@@ -22,11 +37,12 @@ class User {
 
   /**
    * This method is used to check if user input is numeric or not
+   * This method is private only accessible in User class
    * @param userInput This is the first paramter to numOrNo method. It takes the user's input and checks if it is numeric or not.
    * @param check is the second parameter of the numOrNo method. It is used in a try catch statement.
    * @return boolean. True or false. 
    */
-public static boolean numOrNo(String userInput) {
+private static boolean numOrNo(String userInput) {
     if (userInput == null) {
         return false;
     }
@@ -58,6 +74,7 @@ public static boolean numOrNo(String userInput) {
   }
   //cast to integer
   my_target = Integer.parseInt(target);	
+  //return it to be used as the target for targSum
   return my_target;
       }
 }
