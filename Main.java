@@ -1,5 +1,5 @@
 /**
-* The Combo Program Finds all of the possible *combinations in the array that add up to a target
+* The Combo TargSum Program Finds all of the possible *combinations in the array that add up to a target
 * 
 * @author:  Eva Achim
 * @Occupation: Howard University Student
@@ -8,10 +8,11 @@
 * @When: January 18th 2020
 * @Customer: Bernard Wolfolk
 * @Expectations: User interacts with interface
+* @Test Cases in Test Cases.txt
 */
 //different classes
 import UserInter. *;
-import ComboSum. *;
+import TargComboSum. *;
 //libraries to be used in this program
 import java.io.*; 
 import java.lang.*; 
@@ -21,6 +22,7 @@ import java.util.List;
 import java.util.Arrays;
 import java.util.InputMismatchException;
 
+//array class
 class ArrIn {
 
          /**
@@ -34,6 +36,7 @@ class ArrIn {
    */
   public static int[] getMyArr()
   {
+    //prompt user
   System.out.println("Enter the number of elements in array");
   Scanner myGet = new Scanner(System.in); 
   //get the number of elements
@@ -41,13 +44,16 @@ class ArrIn {
   //if the input is not numeric
   while (!User.numOrNo(theCount)){
     System.out.println("Sorry. That was not a number! Enter a count number");
+    //accept new input if previous was wrong
     theCount = myGet.nextLine(); 
   }
   
   //cast to int
   int len = Integer.parseInt(theCount);
+  //if length is invalid
   while (len==0 || len <= -1){
     System.out.println("Sorry. You cannot have an array with less than 1 element. Enter a different number!");
+    //prompt the user again
     theCount = myGet.nextLine(); 
   }
           int [] my_arr = new int[len+1];
@@ -57,10 +63,12 @@ class ArrIn {
                 try{
                 my_arr[i] = myGet.nextInt();
                 }
+                //in case the input is not numeric
                 catch (InputMismatchException exception) 
               { 
     System.out.println("Integers only, please."); 
     myGet.next();
+    //allow new input if previous was wrong
     my_arr[i]=myGet.nextInt();
           }
             }
@@ -77,30 +85,38 @@ class ArrIn {
         }
         
   
-
-class Main {
-  //driver class
+//main class aka "driver class"
   //wanted to rename Driver but Repl.it does not allow me to rename the file to Driver.java from Main.java
+class Main {
+  /* This is the main method. It implements the program
+  *@call 1: public static sayHello method
+  *@param inOp: first parameter of the method. Takes in user input to stay or quit.
+  *@call 2: public static getTarget method
+  *
+  */
   public static void main(String args[]) {
   //greet user
    User.sayHello();
    //input for stay or go
-   String input = "";
+   String inOp = "";
   // get input 
    Scanner sc = new Scanner(System.in);
-        while (!input.toUpperCase().equals("Q"))
+        while (!inOp.toUpperCase().equals("Q"))
 {
        //implement all program here
         System.out.println(Combo.getSum(ArrIn.getMyArr(), User.getTarget()));
         //ask user to press something
         System.out.println("Press Q or q to quit. Any key to continue ...");
         //get input
-        input = sc.next();
-        if(!input.toUpperCase().equals("Q"))
+        inOp = sc.next();
+        //make it all uppercase so it is easier to check it
+        if(!inOp.toUpperCase().equals("Q"))
         {
+          //a new round started
           System.out.println("***** New Round ! *******");
         }
 }
+//end of program
 System.out.println("***** BYE !!! *******");
 //stop everything
 System.exit(0);
